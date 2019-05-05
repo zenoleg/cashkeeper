@@ -13,9 +13,9 @@ class CreateBaseTables extends Migration
      */
     public function up()
     {
-        $this->executeTransactionTable();
-        $this->executeUserTable();
         $this->executeCategoryTable();
+        $this->executeUserTable();
+        $this->executeTransactionTable();
     }
 
     /**
@@ -25,9 +25,9 @@ class CreateBaseTables extends Migration
      */
     public function down()
     {
-        $this->revertTransactionTable();
-        $this->revertUserTable();
         $this->revertCategoryTable();
+        $this->revertUserTable();
+        $this->revertTransactionTable();
     }
 
     /**
@@ -44,16 +44,6 @@ class CreateBaseTables extends Migration
             $table->string('category_id');
             $table->double('value')->nullable(false);
             $table->timestamps();
-
-            $table->primary('id');
-
-            $table->foreign('user_id')
-                ->references('user_id')->on('zen_users')
-                ->onDelete('cascade');
-
-            $table->foreign('category_id')
-                ->references('id')->on('zen_categories')
-                ->onDelete('cascade');
         });
     }
 
@@ -80,8 +70,6 @@ class CreateBaseTables extends Migration
         Schema::create('zen_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable(false)->unique();
-
-            $table->primary('id');
         });
     }
 
