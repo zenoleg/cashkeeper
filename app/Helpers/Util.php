@@ -4,6 +4,8 @@
 namespace App\Helpers;
 
 
+use BotMan\BotMan\BotMan;
+
 class Util
 {
     /**
@@ -37,5 +39,16 @@ class Util
             fwrite($fh, $text);
             fclose($fh);
         }
+    }
+
+    /**
+     * Возвращает полное имя
+     *
+     * @param BotMan $bot
+     * @return string
+     */
+    public static function getFullName(BotMan $bot): string
+    {
+        return sprintf("%s %s", $bot->getUser()->getFirstName(), $bot->getUser()->getFirstName());
     }
 }
