@@ -45,10 +45,12 @@ class Util
      * Возвращает полное имя
      *
      * @param BotMan $bot
-     * @return string
+     * @return array
      */
-    public static function getFullName(BotMan $bot): string
+    public static function getUserInfo(BotMan $bot): array
     {
-        return sprintf("%s %s", $bot->getUser()->getFirstName(), $bot->getUser()->getFirstName());
+        $userId = $bot->getUser()->getId();
+        $fullName = sprintf("%s %s", $bot->getUser()->getFirstName(), $bot->getUser()->getFirstName());
+        return ['id' => $userId, 'name' => $fullName];
     }
 }
