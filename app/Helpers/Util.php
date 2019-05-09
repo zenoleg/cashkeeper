@@ -50,7 +50,7 @@ class Util
     public static function getUserInfo(BotMan $bot): array
     {
         $userId = $bot->getUser()->getId();
-        $fullName = sprintf("%s %s", $bot->getUser()->getFirstName(), $bot->getUser()->getFirstName());
+        $fullName = sprintf("%s %s", $bot->getUser()->getFirstName(), $bot->getUser()->getLastName());
         return ['id' => $userId, 'name' => $fullName];
     }
 }

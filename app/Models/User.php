@@ -34,7 +34,7 @@ class User extends Model
      */
     public function getBalanceValue(int $userId): float
     {
-        $data = self::class::where('user_id', $userId)->get();
+        $data = User::where('user_id', $userId)->get();
         print_r($data);
     }
 
