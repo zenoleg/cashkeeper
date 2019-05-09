@@ -5,7 +5,6 @@ namespace App\Services;
 
 
 use App\Models\User;
-use RuntimeException;
 
 class UserService
 {
@@ -14,6 +13,7 @@ class UserService
      *
      * @param int $userId
      * @param string $name
+     * @throws \Exception
      */
     public function initUser(int $userId, string $name)
     {
@@ -21,7 +21,7 @@ class UserService
             $isInit = User::initUser($userId, $name);
 
             if (!$isInit) {
-                throw new RuntimeException('User can`t be inited', 500);
+                throw new \Exception('User can`t be inited', 500);
             }
         }
     }
