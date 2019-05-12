@@ -15,6 +15,7 @@ class CategoryKeyboard extends AbstractKeyboard
             ->type(Keyboard::TYPE_KEYBOARD)
             ->oneTimeKeyboard(false)
             ->resizeKeyboard(true)
-            ->addRow(KeyboardButton::create('Зарплата'), KeyboardButton::create('Подработка'));
+            ->addRow(KeyboardButton::create('Зарплата'), KeyboardButton::create('Подработка'))
+            ->addRow(KeyboardButton::create('Подарок'), KeyboardButton::create('Долги'));
     }
 }
