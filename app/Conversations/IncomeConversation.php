@@ -4,9 +4,10 @@ namespace App\Conversations;
 
 use App\Helpers\Keyboards\BackKeyboard;
 use App\Helpers\Keyboards\IncomeCategoryKeyboard;
-use App\Helpers\Keyboards\EmptyKeyboard;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
+use App\Models\Income;
+use BotMan\BotMan\BotMan;
 use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -15,26 +16,35 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class IncomeConversation extends Conversation
 {
+    /** @var BotMan */
+    protected $bot;
+
     protected $category;
     protected $value;
+    protected $name;
+
+    public function __construct(BotMan $bot)
+    {
+        $this->bot = $bot;
+    }
 
     /**
-     * First question
+     * Запрос категории
      */
-    public function askReason()
+    public function askCategory()
     {
         $categoryKeyboard = new IncomeCategoryKeyboard();
 
         return $this->ask('Выберите категорию', function (Answer $answer) {
             $this->category = $answer->getText();
-            $this->askReason2();
+            $this->askValue();
         }, $categoryKeyboard->toArray());
     }
 
     /**
-     * Second question
+     * Запрос суммы
      */
-    public function askReason2()
+    public function askValue()
     {
         $backKeyboard = new BackKeyboard();
         $welcomeKeyboard = new WelcomeKeyboard();
@@ -45,7 +55,35 @@ class IncomeConversation extends Conversation
             switch ($answer->getText()) {
                 case '<< Назад':
                     {
-                        $this->askReason();
+                        $this->askCategory();
+                        return true;
+                    }
+                case 'Выйти':
+                    {
+                        $this->say('Выход', $welcomeKeyboard->toArray());
+                        return true;
+                    }
+                default:
+                    $this->askDescription();
+            }
+        }, $backKeyboard->toArray());
+    }
+
+    /**
+     * Запрос описания
+     */
+    public function askDescription()
+    {
+        $backKeyboard = new BackKeyboard();
+
+        return $this->ask('Заполните описание', function (Answer $answer) {
+            $this->name = $answer->getText();
+            $welcomeKeyboard = new WelcomeKeyboard();
+
+            switch ($answer->getText()) {
+                case '<< Назад':
+                    {
+                        $this->askValue();
                         return true;
                     }
                 case 'Выйти':
@@ -55,7 +93,14 @@ class IncomeConversation extends Conversation
                     }
             }
 
-            $this->say($this->category . ' | ' . $this->value, $welcomeKeyboard->toArray());
+            $userInfo = Util::getUserInfo($this->bot);
+
+            if (Income::add($userInfo['id'], $this->name, $this->category, $this->value)) {
+                $this->say('Пополнение учтено 😉', $welcomeKeyboard->toArray());
+            } else {
+                $this->say('При добавлении транзакции произошла ошибка 😱', $welcomeKeyboard->toArray());
+            }
+
         }, $backKeyboard->toArray());
     }
 
@@ -64,6 +109,6 @@ class IncomeConversation extends Conversation
      */
     public function run()
     {
-        $this->askReason();
+        $this->askCategory();
     }
 }

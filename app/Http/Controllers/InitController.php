@@ -58,6 +58,6 @@ class InitController extends Controller
 
     public function income(BotMan $bot)
     {
-        $bot->startConversation(new IncomeConversation());
+        $bot->startConversation(new IncomeConversation($bot));
     }
 }
