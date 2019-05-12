@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversations\ExampleConversation;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
 use App\Models\User;
@@ -51,5 +52,10 @@ class InitController extends Controller
         } catch (Exception $e) {
             $bot->reply($e->getMessage());
         }
+    }
+
+    public function income(BotMan $bot)
+    {
+        $bot->startConversation(new ExampleConversation());
     }
 }

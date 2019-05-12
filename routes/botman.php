@@ -8,6 +8,7 @@ $botman = resolve('botman');
 
 $botman->hears('/start', 'App\Http\Controllers\InitController@start');
 $botman->hears('.*Баланс.*', InitController::class . '@balance');
+$botman->hears('.*Пополнение.*', InitController::class . '@income');
 
 $botman->hears('Hi', function (BotMan $bot) {
     $bot->reply('Hello!');
