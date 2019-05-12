@@ -53,4 +53,17 @@ class Util
         $fullName = sprintf("%s %s", $bot->getUser()->getFirstName(), $bot->getUser()->getLastName());
         return ['id' => $userId, 'name' => $fullName];
     }
+
+    /**
+     * Форматирует значение
+     *
+     * @param float $value
+     * @return string
+     */
+    public static function formatValue(float $value): string
+    {
+        $formatValue = number_format($value, 2, ',', ' ');
+
+        return sprintf("%s ₽", $formatValue);
+    }
 }

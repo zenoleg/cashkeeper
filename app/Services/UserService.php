@@ -35,11 +35,11 @@ class UserService
      * @return string
      * @throws Exception
      */
-    public function getUserBalance(BotMan $bot)
+    public function getUserBalance(BotMan $bot): string
     {
         $userInfo = Util::getUserInfo($bot);
         $balance = User::getBalance($userInfo['id']);
 
-        return $balance;
+        return Util::formatValue($balance);
     }
 }
