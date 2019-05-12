@@ -21,4 +21,27 @@ class Income extends Model
         'value',
     ];
 
+    /**
+     * Добавляет пополнение
+     *
+     * @param int $userId
+     * @param string $name
+     * @param string $desc
+     * @param int $categoryId
+     * @param float $value
+     * @return bool
+     */
+    public static function add(int $userId, string $name, string $desc, int $categoryId, float $value): bool
+    {
+        $income = new Income([
+            'user_id' => $userId,
+            'name' => $name,
+            'description' => $desc,
+            'category_id' => $categoryId,
+            'value' => $value
+        ]);
+
+        return $income->save();
+    }
+
 }
