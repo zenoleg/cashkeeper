@@ -7,7 +7,7 @@ namespace App\Helpers\Keyboards;
 use BotMan\Drivers\Telegram\Extensions\Keyboard;
 use BotMan\Drivers\Telegram\Extensions\KeyboardButton;
 
-class CategoryKeyboard extends AbstractKeyboard
+class IncomeCategoryKeyboard extends AbstractKeyboard
 {
     protected function create()
     {

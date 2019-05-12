@@ -3,7 +3,7 @@
 namespace App\Conversations;
 
 use App\Helpers\Keyboards\BackKeyboard;
-use App\Helpers\Keyboards\CategoryKeyboard;
+use App\Helpers\Keyboards\IncomeCategoryKeyboard;
 use App\Helpers\Keyboards\EmptyKeyboard;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
@@ -23,7 +23,7 @@ class IncomeConversation extends Conversation
      */
     public function askReason()
     {
-        $categoryKeyboard = new CategoryKeyboard();
+        $categoryKeyboard = new IncomeCategoryKeyboard();
 
         return $this->ask('Выберите категорию', function (Answer $answer) {
             $this->category = $answer->getText();

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Conversations\IncomeConversation;
-use App\Helpers\Keyboards\CategoryKeyboard;
+use App\Helpers\Keyboards\IncomeCategoryKeyboard;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
 use App\Models\User;
