@@ -17,13 +17,23 @@ class CategorySeeder extends Seeder
         ]);
 
         $category->save();
-        $category->setAttribute('name', 'Подработка');
+
+        $category = new Category([
+            'name' => 'Подработка'
+        ]);
+
         $category->save();
 
-        $category->setAttribute('name', 'Подарок');
+        $category = new Category([
+            'name' => 'Подарок'
+        ]);
+
         $category->save();
 
-        $category->setAttribute('name', 'Долги');
+        $category = new Category([
+            'name' => 'Долги'
+        ]);
+
         $category->save();
     }
 }
