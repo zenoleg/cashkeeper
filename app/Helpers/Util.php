@@ -4,6 +4,8 @@
 namespace App\Helpers;
 
 
+use BotMan\BotMan\BotMan;
+
 class Util
 {
     /**
@@ -37,5 +39,31 @@ class Util
             fwrite($fh, $text);
             fclose($fh);
         }
+    }
+
+    /**
+     * Возвращает полное имя
+     *
+     * @param BotMan $bot
+     * @return array
+     */
+    public static function getUserInfo(BotMan $bot): array
+    {
+        $userId = $bot->getUser()->getId();
+        $fullName = sprintf("%s %s", $bot->getUser()->getFirstName(), $bot->getUser()->getLastName());
+        return ['id' => $userId, 'name' => $fullName];
+    }
+
+    /**
+     * Форматирует значение
+     *
+     * @param float $value
+     * @return string
+     */
+    public static function formatValue(float $value): string
+    {
+        $formatValue = number_format($value, 2, ',', ' ');
+
+        return sprintf("%s ₽", $formatValue);
     }
 }

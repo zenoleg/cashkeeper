@@ -1,15 +1,13 @@
 <?php
 
-use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Http\Controllers\BotManController;
+use App\Http\Controllers\InitController;
 use BotMan\BotMan\BotMan;
 
 $botman = resolve('botman');
 
-$botman->hears('/start', function (BotMan $bot) {
-    $welcomeKeyboard = new WelcomeKeyboard();
-    $bot->reply('Success init', $welcomeKeyboard->toArray());
-});
+$botman->hears('/start', 'App\Http\Controllers\InitController@start');
+$botman->hears('.*Баланс.*', InitController::class . '@balance');
 
 $botman->hears('Hi', function (BotMan $bot) {
     $bot->reply('Hello!');
