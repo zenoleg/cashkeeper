@@ -15,7 +15,6 @@ class Transaction extends Model
      */
     protected $fillable = [
         'user_id',
-        'is_cost',
         'name',
         'description',
         'category_id',
