@@ -41,7 +41,6 @@ class CreateBaseTables extends Migration
             $table->increments('id');
             $table->integer('user_id')->nullable(false);
             $table->string('name')->nullable(false);
-            $table->text('description');
             $table->string('category_id');
             $table->double('value')->nullable(false);
             $table->timestamps();
@@ -57,7 +56,6 @@ class CreateBaseTables extends Migration
             $table->increments('id');
             $table->integer('user_id')->nullable(false);
             $table->string('name')->nullable(false);
-            $table->text('description');
             $table->string('category_id');
             $table->double('value')->nullable(false);
             $table->timestamps();
