@@ -76,4 +76,18 @@ class User extends Model
         return $count !== 0;
     }
 
+    /**
+     * Добавляет значение к текущему балансу
+     *
+     * @param int $userId
+     * @param float $value
+     * @return mixed
+     */
+    public static function addBalance(int $userId, float $value)
+    {
+        $currentBalance = User::where('user_id', $userId)->value('balance');
+        $isUserBalanceUpd = User::where('user_id', $userId)->update(['balance' => $currentBalance + $value]);
+        return $isUserBalanceUpd;
+    }
+
 }

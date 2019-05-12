@@ -38,7 +38,8 @@ class Income extends Model
             'value' => $value
         ]);
 
-        return $income->save();
-    }
+        $isUserBalanceUpd = User::addBalance($userId, $value);
 
+        return $income->save() && $isUserBalanceUpd;
+    }
 }
