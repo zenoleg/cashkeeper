@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -31,11 +32,17 @@ class User extends Model
      *
      * @param int $userId
      * @return float
+     * @throws Exception
      */
-    public function getBalanceValue(int $userId): float
+    public static function getBalance(int $userId): float
     {
-        $data = User::where('user_id', $userId)->get();
-        print_r($data);
+        $userBalance = User::where('user_id', $userId)->value('balance');
+
+        if ($userBalance === null) {
+            throw new Exception('cant get balance', 500);
+        }
+
+        return $userBalance;
     }
 
     /**

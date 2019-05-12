@@ -23,12 +23,23 @@ class UserService
         $userId = $userInfo['id'];
         $userName = $userInfo['name'];
 
-        if (!User::isExist($userId)) {
-            $isInit = User::initUser($userId, $userName);
-
-            if (!$isInit) {
-                throw new Exception('User can`t be inited', 500);
-            }
+        if (!User::initUser($userId, $userName)) {
+            throw new Exception('User cant be registered', 500);
         }
+    }
+
+    /**
+     * Возвращает баланс пользователя
+     *
+     * @param BotMan $bot
+     * @return string
+     * @throws Exception
+     */
+    public function getUserBalance(BotMan $bot)
+    {
+        $userInfo = Util::getUserInfo($bot);
+        $balance = User::getBalance($userInfo['id']);
+
+        return $balance;
     }
 }
