@@ -8,10 +8,7 @@ use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
 use App\Models\Income;
 use BotMan\BotMan\BotMan;
-use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Outgoing\Question;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class IncomeConversation extends Conversation
