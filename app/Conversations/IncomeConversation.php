@@ -7,6 +7,7 @@ use App\Helpers\Keyboards\IncomeCategoryKeyboard;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
 use App\Models\Income;
+use App\Services\UserService;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Conversations\Conversation;
@@ -93,6 +94,10 @@ class IncomeConversation extends Conversation
 
             if (Income::add($this->userInfo['id'], $this->name, $this->category, $this->value)) {
                 $this->say('Пополнение учтено 😉', $this->welcomeKeyboard->toArray());
+
+                $userService = new UserService();
+                $balance = $userService->getUserBalance($this->bot);
+                $this->say(sprintf("Текущий баланс: %s", $balance), $this->welcomeKeyboard->toArray());
             } else {
                 $this->say('При добавлении транзакции произошла ошибка 😱', $this->welcomeKeyboard->toArray());
             }
