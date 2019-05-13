@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversations\ExampleConversation;
 use App\Conversations\IncomeConversation;
-use App\Helpers\Keyboards\IncomeCategoryKeyboard;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
 use App\Models\User;
@@ -56,8 +56,23 @@ class InitController extends Controller
         }
     }
 
+    /**
+     * Пополнение
+     *
+     * @param BotMan $bot
+     */
     public function income(BotMan $bot)
     {
         $bot->startConversation(new IncomeConversation($bot));
+    }
+
+    /**
+     * Затраты
+     *
+     * @param BotMan $bot
+     */
+    public function transaction(BotMan $bot)
+    {
+        $bot->startConversation(new ExampleConversation());
     }
 }
