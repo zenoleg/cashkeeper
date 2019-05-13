@@ -3,16 +3,16 @@
 namespace App\Conversations;
 
 use App\Helpers\Keyboards\BackKeyboard;
-use App\Helpers\Keyboards\IncomeCategoryKeyboard;
+use App\Helpers\Keyboards\TransactionCategoryKeyboard;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
-use App\Models\Income;
+use App\Models\Transaction;
 use App\Services\UserService;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 
-class IncomeConversation extends Conversation
+class TransactionConversation extends Conversation
 {
     /** @var BotMan */
     protected $bot;
@@ -32,7 +32,7 @@ class IncomeConversation extends Conversation
         $this->userInfo = Util::getUserInfo($bot);
         $this->backKeyboard = new BackKeyboard();
         $this->welcomeKeyboard = new WelcomeKeyboard();
-        $this->categoryKeyboard = new IncomeCategoryKeyboard();
+        $this->categoryKeyboard = new TransactionCategoryKeyboard();
     }
 
     /**
@@ -106,8 +106,8 @@ class IncomeConversation extends Conversation
                     }
             }
 
-            if (Income::add($this->userInfo['id'], $this->name, $this->category, $this->value)) {
-                $this->say('Пополнение учтено 😉', $this->welcomeKeyboard->toArray());
+            if (Transaction::add($this->userInfo['id'], $this->name, $this->category, $this->value)) {
+                $this->say('Затраты учтены 😉', $this->welcomeKeyboard->toArray());
 
                 $userService = new UserService();
                 $balance = $userService->getUserBalance($this->bot);
