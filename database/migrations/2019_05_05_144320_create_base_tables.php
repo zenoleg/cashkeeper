@@ -16,6 +16,7 @@ class CreateBaseTables extends Migration
         $this->executeCategoryTable();
         $this->executeUserTable();
         $this->executeTransactionTable();
+        $this->executeIncomeTable();
     }
 
     /**
@@ -28,6 +29,7 @@ class CreateBaseTables extends Migration
         $this->revertCategoryTable();
         $this->revertUserTable();
         $this->revertTransactionTable();
+        $this->revertIncomeTable();
     }
 
     /**
@@ -38,9 +40,22 @@ class CreateBaseTables extends Migration
         Schema::create('zen_transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->nullable(false);
-            $table->boolean('is_cost')->nullable(false);
             $table->string('name')->nullable(false);
-            $table->text('description');
+            $table->string('category_id');
+            $table->double('value')->nullable(false);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Создает таблицу пополнений
+     */
+    public function executeIncomeTable(): void
+    {
+        Schema::create('zen_incomes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->nullable(false);
+            $table->string('name')->nullable(false);
             $table->string('category_id');
             $table->double('value')->nullable(false);
             $table->timestamps();
@@ -88,6 +103,14 @@ class CreateBaseTables extends Migration
     public function revertTransactionTable(): void
     {
         Schema::drop('zen_transactions');
+    }
+
+    /**
+     * Удаляет таблицу пополнений
+     */
+    public function revertIncomeTable(): void
+    {
+        Schema::drop('zen_incomes');
     }
 
     /**

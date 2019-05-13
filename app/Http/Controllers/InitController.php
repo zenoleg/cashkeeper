@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversations\IncomeConversation;
+use App\Helpers\Keyboards\IncomeCategoryKeyboard;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
 use App\Models\User;
@@ -33,7 +35,7 @@ class InitController extends Controller
             $bot->reply(sprintf("Добро пожаловать,\n%s", $userInfo['name']), $welcomeKeyboard->toArray());
         }
 
-        $bot->reply('', $welcomeKeyboard->toArray());
+        $bot->reply('Вы уже зарегистрированы', $welcomeKeyboard->toArray());
     }
 
     /**
@@ -44,12 +46,18 @@ class InitController extends Controller
     public function balance(BotMan $bot)
     {
         $userService = new UserService();
+        $welcomeKeyboard = new WelcomeKeyboard();
 
         try {
             $userBalance = $userService->getUserBalance($bot);
-            $bot->reply(sprintf("Ваш баланс: %s", $userBalance));
+            $bot->reply(sprintf("Ваш баланс: %s", $userBalance), $welcomeKeyboard->toArray());
         } catch (Exception $e) {
             $bot->reply($e->getMessage());
         }
+    }
+
+    public function income(BotMan $bot)
+    {
+        $bot->startConversation(new IncomeConversation($bot));
     }
 }
