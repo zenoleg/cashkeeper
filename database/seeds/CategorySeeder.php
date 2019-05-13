@@ -5,6 +5,23 @@ use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
+    protected $categories = [
+        'Зарплата',
+        'Подработка',
+        'Подарок',
+        'Долги',
+        'Супермаркеты',
+        'Еда вне дома',
+        'Переводы',
+        'Медицина',
+        'Одежда',
+        'Автомобиль',
+        'Красота',
+        'Квартира',
+        'Связь',
+        'Сервисы',
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -12,28 +29,15 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $category = new Category([
-            'name' => 'Зарплата'
-        ]);
+        Category::truncate();
 
-        $category->save();
+        foreach ($this->categories as $category) {
+            $category = new Category([
+                'name' => $category
+            ]);
 
-        $category = new Category([
-            'name' => 'Подработка'
-        ]);
+            $category->save();
+        }
 
-        $category->save();
-
-        $category = new Category([
-            'name' => 'Подарок'
-        ]);
-
-        $category->save();
-
-        $category = new Category([
-            'name' => 'Долги'
-        ]);
-
-        $category->save();
     }
 }

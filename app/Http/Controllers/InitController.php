@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Conversations\ExampleConversation;
 use App\Conversations\IncomeConversation;
+use App\Conversations\TransactionConversation;
 use App\Helpers\Keyboards\WelcomeKeyboard;
 use App\Helpers\Util;
 use App\Models\User;
@@ -73,6 +74,6 @@ class InitController extends Controller
      */
     public function transaction(BotMan $bot)
     {
-        $bot->startConversation(new ExampleConversation());
+        $bot->startConversation(new TransactionConversation($bot));
     }
 }
