@@ -15,14 +15,23 @@ class IncomeConversation extends Conversation
 {
     /** @var BotMan */
     protected $bot;
+    protected $userInfo;
 
     protected $category;
     protected $value;
     protected $name;
 
+    protected $backKeyboard;
+    protected $welcomeKeyboard;
+    protected $categoryKeyboard;
+
     public function __construct(BotMan $bot)
     {
         $this->bot = $bot;
+        $this->userInfo = Util::getUserInfo($bot);
+        $this->backKeyboard = new BackKeyboard();
+        $this->welcomeKeyboard = new WelcomeKeyboard();
+        $this->categoryKeyboard = new IncomeCategoryKeyboard();
     }
 
     /**
@@ -30,12 +39,10 @@ class IncomeConversation extends Conversation
      */
     public function askCategory()
     {
-        $categoryKeyboard = new IncomeCategoryKeyboard();
-
         return $this->ask('Выберите категорию', function (Answer $answer) {
             $this->category = $answer->getText();
             $this->askValue();
-        }, $categoryKeyboard->toArray());
+        }, $this->categoryKeyboard->toArray());
     }
 
     /**
@@ -43,10 +50,7 @@ class IncomeConversation extends Conversation
      */
     public function askValue()
     {
-        $backKeyboard = new BackKeyboard();
-        $welcomeKeyboard = new WelcomeKeyboard();
-
-        return $this->ask('Введите сумму', function (Answer $answer) use ($welcomeKeyboard) {
+        return $this->ask('Введите сумму', function (Answer $answer) {
             $this->value = $answer->getText();
 
             switch ($answer->getText()) {
@@ -57,25 +61,22 @@ class IncomeConversation extends Conversation
                     }
                 case 'Выйти':
                     {
-                        $this->say('Выход', $welcomeKeyboard->toArray());
+                        $this->say('Выход', $this->welcomeKeyboard->toArray());
                         return true;
                     }
                 default:
-                    $this->askDescription();
+                    $this->askName();
             }
-        }, $backKeyboard->toArray());
+        }, $this->backKeyboard->toArray());
     }
 
     /**
      * Запрос описания
      */
-    public function askDescription()
+    public function askName()
     {
-        $backKeyboard = new BackKeyboard();
-
         return $this->ask('Заполните описание', function (Answer $answer) {
             $this->name = $answer->getText();
-            $welcomeKeyboard = new WelcomeKeyboard();
 
             switch ($answer->getText()) {
                 case '<< Назад':
@@ -85,20 +86,18 @@ class IncomeConversation extends Conversation
                     }
                 case 'Выйти':
                     {
-                        $this->say('Выход', $welcomeKeyboard->toArray());
+                        $this->say('Выход', $this->welcomeKeyboard->toArray());
                         return true;
                     }
             }
 
-            $userInfo = Util::getUserInfo($this->bot);
-
-            if (Income::add($userInfo['id'], $this->name, $this->category, $this->value)) {
-                $this->say('Пополнение учтено 😉', $welcomeKeyboard->toArray());
+            if (Income::add($this->userInfo['id'], $this->name, $this->category, $this->value)) {
+                $this->say('Пополнение учтено 😉', $this->welcomeKeyboard->toArray());
             } else {
-                $this->say('При добавлении транзакции произошла ошибка 😱', $welcomeKeyboard->toArray());
+                $this->say('При добавлении транзакции произошла ошибка 😱', $this->welcomeKeyboard->toArray());
             }
 
-        }, $backKeyboard->toArray());
+        }, $this->backKeyboard->toArray());
     }
 
     /**
