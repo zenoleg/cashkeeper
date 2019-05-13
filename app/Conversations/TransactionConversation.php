@@ -42,7 +42,21 @@ class TransactionConversation extends Conversation
     {
         return $this->ask('Выберите категорию', function (Answer $answer) {
             $this->category = $answer->getText();
-            $this->askValue();
+
+            switch ($answer->getText()) {
+                case '<< Назад':
+                    {
+                        $this->askCategory();
+                        return true;
+                    }
+                case 'Выйти':
+                    {
+                        $this->say('Выход', $this->welcomeKeyboard->toArray());
+                        return true;
+                    }
+                default:
+                    $this->askValue();
+            }
         }, $this->categoryKeyboard->toArray());
     }
 
