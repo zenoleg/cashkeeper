@@ -20,6 +20,6 @@ class TransactionCategoryKeyboard extends AbstractKeyboard
             ->addRow(KeyboardButton::create('Одежда'), KeyboardButton::create('Автомобиль'))
             ->addRow(KeyboardButton::create('Красота'), KeyboardButton::create('Квартира'))
             ->addRow(KeyboardButton::create('Связь'), KeyboardButton::create('Сервисы'))
-            ->addRow(KeyboardButton::create('<< Назад'), KeyboardButton::create('Выход'));
+            ->addRow(KeyboardButton::create('<< Назад'), KeyboardButton::create('Выйти'));
     }
 }

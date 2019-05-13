@@ -17,6 +17,6 @@ class IncomeCategoryKeyboard extends AbstractKeyboard
             ->resizeKeyboard(true)
             ->addRow(KeyboardButton::create('Зарплата'), KeyboardButton::create('Подработка'))
             ->addRow(KeyboardButton::create('Подарок'), KeyboardButton::create('Долги'))
-            ->addRow(KeyboardButton::create('<< Назад'), KeyboardButton::create('Выход'));
+            ->addRow(KeyboardButton::create('<< Назад'), KeyboardButton::create('Выйти'));
     }
 }

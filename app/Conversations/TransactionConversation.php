@@ -46,7 +46,7 @@ class TransactionConversation extends Conversation
             switch ($answer->getText()) {
                 case '<< Назад':
                     {
-                        $this->askCategory();
+                        $this->say('Выход', $this->welcomeKeyboard->toArray());
                         return true;
                     }
                 case 'Выйти':
